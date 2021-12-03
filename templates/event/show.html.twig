@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ event.name }} - {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/event/show.css') }}">
+{% endblock %}
+
+{% block body %}
+    <h1>{{ event.name }}</h1>
+    
+
+{% endblock %}
