@@ -44,6 +44,14 @@ header a{
 
 main{
     flex: 1;
+    padding: 20px;
+}
+main.no-spaces{
+    padding: 0;
+}
+
+h1{
+    margin-top: 0;
 }
 
 .button{
