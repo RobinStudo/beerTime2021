@@ -14,6 +14,19 @@
 
             <article class="event">
                 <div class="event-picture">
+                    {% if event.endAt < date() %}
+                        {% set statusText = 'Passé' %}
+                        {% set statusColor = 'red' %}
+                    {% elseif event.startAt < date() %}
+                        {% set statusText = 'En cours' %}
+                        {% set statusColor = 'blue' %}
+                    {% else %}
+                        {% set statusText = 'A venir' %}
+                        {% set statusColor = 'green' %}
+                    {% endif %}
+                    <span class="event-status {{ statusColor }}">
+                        {{ statusText }}
+                    </span>
                     <img src="{{ event.picture }}" alt="{{ event.name }}">
                 </div>
                 <div class="event-summary">

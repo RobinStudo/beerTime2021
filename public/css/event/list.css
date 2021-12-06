@@ -9,7 +9,28 @@
 
 .events .event .event-picture{
     width: 200px;
+    position: relative;
 }
+
+.events .event .event-status{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+}
+
+.event-status.red{
+    background-color: #c0392b;
+}
+.event-status.blue{
+    background-color: #3498db;
+}
+.event-status.green{
+    background-color: #27ae60;
+}
+
 
 .events .event img{
     width: 100%;
