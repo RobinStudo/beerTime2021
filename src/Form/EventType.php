@@ -33,11 +33,17 @@ class EventType extends AbstractType
                 'label' => 'Date de début',
                 'date_widget' => 'single_text',
                 'time_widget' => 'single_text',
+                'attr' => [
+                    'class' => 'datetime-widget',
+                ]
             ])
             ->add('endAt', null, [
                 'label' => 'Date de fin',
                 'date_widget' => 'single_text',
                 'time_widget' => 'single_text',
+                'attr' => [
+                    'class' => 'datetime-widget',
+                ]
             ])
             ->add('price', MoneyType::class, [
                 'label' => 'Prix'
@@ -60,7 +66,10 @@ class EventType extends AbstractType
                 'expanded' => true,
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Enregistrer'
+                'label' => 'Enregistrer',
+                'attr' => [
+                    'class' => 'button',
+                ]
             ])
         ;
     }

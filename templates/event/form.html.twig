@@ -2,6 +2,40 @@
 
 {% block title %}Créer événement - {{ parent() }}{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/components/form.css') }}">
+{% endblock %}
+
 {% block body %}
-    {{ form(form) }}
+    {# {{ form(form) }} #}
+
+    {{ form_start(form) }}
+
+    <div class="form-row">
+        {{ form_row(form.name) }}
+    </div>
+    <div class="form-row">
+        {{ form_row(form.picture) }}
+        {{ form_row(form.category) }}
+    </div>
+    <div class="form-row">
+        {{ form_row(form.startAt) }}
+        {{ form_row(form.endAt) }}
+    </div>
+    <div class="form-row">
+        {{ form_row(form.price) }}
+        {{ form_row(form.capacity) }}
+    </div>
+    <div class="form-row">
+        {{ form_row(form.place) }}
+    </div>
+    <div class="form-row">
+        {{ form_row(form.description) }}
+        {{ form_row(form.rules) }}
+    </div>
+
+    <div class="form-end">
+        {{ form_row(form.submit) }}
+    </div>
+    {{ form_end(form) }}
 {% endblock %}
