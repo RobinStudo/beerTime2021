@@ -5,6 +5,7 @@ use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EventRepository::class)
@@ -19,36 +20,62 @@ class Event
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Vous devez saisir un nom pour l'événement")
+     * @Assert\Length(
+     *      min=3,
+     *      max=60,
+     *      minMessage="Le nom doit contenir au minimum {{ limit }} caractères",
+     *      maxMessage="Le nom doit contenir au maximum {{ limit }} caractères"
+     * )
      * @ORM\Column(type="string", length=60)
      */
     private $name;
 
     /**
+     * @Assert\NotBlank(message="Vous devez ajout une URL d'image")
+     * @Assert\Url(message="Vous devez saisir une URL valide")
      * @ORM\Column(type="string", length=255)
      */
     private $picture;
 
     /**
-     * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Vous devez saisir une description pour l'événement")
+     * @Assert\Length(
+     *      min=10,
+     *      max=1500,
+     *      minMessage="La description doit contenir au minimum {{ limit }} caractères",
+     *      maxMessage="La description doit contenir au maximum {{ limit }} caractères"
+     * )
+    * @ORM\Column(type="text")
      */
     private $description;
 
     /**
+     * @Assert\NotBlank(message="Vous devez saisir une date de début")
+     * @Assert\GreaterThan("now", message="Vous devez saisir une date de début supérieur à la date actuelle")
      * @ORM\Column(type="datetime")
      */
     private $startAt;
 
     /**
+     * @Assert\NotBlank(message="Vous devez saisir une date de fin")
+     * @Assert\GreaterThan(propertyPath="startAt", message="Vous devez saisir une date de fin supérieur à la date de début")
      * @ORM\Column(type="datetime")
      */
     private $endAt;
 
     /**
+     * @Assert\Range(
+     *     min=5,
+     *     max=500,
+     *     notInRangeMessage="Le prix minimum est de {{ min }}€, pour un événement gratuit laisser le champ vide. Pour des événements avec un prix supérieur à {{ max }}€, veuillez contacter notre équipe.",
+     * )
      * @ORM\Column(type="float", nullable=true)
      */
     private $price;
 
     /**
+     * @Assert\Positive(message="Vous devez saisir une capacité positive ou laisser le champ vide pour ne pas imposer de limite")
      * @ORM\Column(type="integer", nullable=true)
      */
     private $capacity;
@@ -126,7 +153,7 @@ class Event
         return $this->startAt;
     }
 
-    public function setStartAt(\DateTimeInterface $startAt): self
+    public function setStartAt(?\DateTimeInterface $startAt): self
     {
         $this->startAt = $startAt;
 
@@ -138,7 +165,7 @@ class Event
         return $this->endAt;
     }
 
-    public function setEndAt(\DateTimeInterface $endAt): self
+    public function setEndAt(?\DateTimeInterface $endAt): self
     {
         $this->endAt = $endAt;
 
