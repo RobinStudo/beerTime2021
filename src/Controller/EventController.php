@@ -1,6 +1,8 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Event;
+use App\Form\EventType;
 use App\Repository\EventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +24,7 @@ class EventController extends AbstractController
         $events = $this->eventRepository->findAll();
 
         return $this->render('event/list.html.twig', [
-            'events' => $events
+            'events' => $events,
         ]);
     }
 
@@ -32,13 +34,18 @@ class EventController extends AbstractController
         $event = $this->eventRepository->find($id);
 
         return $this->render('event/show.html.twig', [
-            'event' => $event
+            'event' => $event,
         ]);
     }
 
     #[Route('/new', name: 'new')]
     public function new(): Response
     {
-        return new Response("Page de création d'un événement");
+        $event = new Event();
+        $form = $this->createForm(EventType::class, $event);
+
+        return $this->render('event/form.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }
