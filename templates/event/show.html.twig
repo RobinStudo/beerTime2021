@@ -6,8 +6,56 @@
     <link rel="stylesheet" href="{{ asset('css/event/show.css') }}">
 {% endblock %}
 
-{% block body %}
-    <h1>{{ event.name }}</h1>
-    
+{% block mainClasses %}no-spaces{% endblock %}
 
+{% block body %}
+    <article class="event">
+        <div class="event-view">
+            <img src="{{ event.picture }}" alt="{{ event.name }}">
+            <h1>{{ event.name }}</h1>
+        </div>
+        <div class="event-summary">
+            <p class="event-summary__description">
+                {{ event.description }}
+            </p>
+            <aside class="event-summary__detail">
+                <ul>
+                    <li data-icon="&#xf274">
+                        {{ event.startAt|date('d/m/Y H:i') }}
+                    </li>
+                    <li data-icon="&#xf273">
+                        {{ event.endAt|date('d/m/Y H:i') }}
+                    </li>
+                    <li data-icon="&#xf3c5">
+                        {% if event.place %}
+                            {{ event.place.name }}<br>
+                            {{ event.place.street }}<br>
+                            {{ event.place.zipcode }} - {{ event.place.city }}
+                        {% else %}
+                            A distance    
+                        {% endif %}    
+                    </li>
+                    <li data-icon="&#xf007">
+                        {{ event.owner.username }}
+                    </li>
+                </ul>
+            </aside>
+        </div>
+        <ul class="event-rules">
+            {% for rule in event.rules %}
+                <li>{{ rule.label }}</li>
+            {% endfor %}
+        </ul>
+        <div class="event-register">
+            <span>
+                <i class="fas fa-euro-sign"></i>
+                {{ event.price ?? 'Gratuit' }}
+            </span>
+            <span>
+                <i class="fas fa-ticket-alt"></i>
+                10 places restantes
+            </span>
+            <a href="#" class="button">Réserver</a>
+        </div>
+    </article>
 {% endblock %}
