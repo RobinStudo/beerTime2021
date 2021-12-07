@@ -69,18 +69,3 @@ class EventController extends AbstractController
         ]);
     }
 }
-
-// Formulaire d'inscription
-// Etape 1
-// Création du formulaire via ligne de commande /
-// Création d'un contrôleur / d'une route / d'une vue /
-// Initialiser le formulaire dans le contrôleur et le passer à la vue /
-// Etape 2
-// Afficher et mettre en forme le formulaire
-// Et le configurer via les options du Type
-// Etape 3
-// Connecter la requête au formulaire
-// Mettre en place les contraintes de validation
-// (facultatif) Hasher le mot de passe
-// Ajouter en base de donnée si formulaire ok
-// Gérer le retour utilisateur (redirection / confikrmation)
