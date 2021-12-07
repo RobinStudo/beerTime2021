@@ -22,7 +22,7 @@ class UserType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'E-mail',
             ])
-            ->add('password', PasswordType::class, [
+            ->add('plainPassword', PasswordType::class, [
                 'label' => 'Mot de passe',
             ])
             ->add('birthdate', BirthdayType::class, [

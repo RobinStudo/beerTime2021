@@ -46,6 +46,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $email;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $password;
+
+    /**
      * @Assert\NotBlank(message="Vous devez saisir un mot de passe")
      * @Assert\Length(
      *      min=8,
@@ -55,9 +60,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * )
      * @Assert\Regex("/^(?=.*[A-Za-z])(?=.*\d)(?=.*?[@$!%*#?&])/", message="Votre mot de passe doit au minmum contenir un chiffre, une lettre et un caractère spécial")
      * @Assert\NotCompromisedPassword(message="Ce mot de passe semble avoir déjà été compromis lors d'une fuite de donnée d'un autre service")
-     * @ORM\Column(type="string", length=255)
      */
-    private $password;
+    private $plainPassword;
 
     /**
      * @ORM\Column(type="json")
@@ -124,6 +128,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }
