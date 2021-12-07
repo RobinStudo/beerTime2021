@@ -10,7 +10,7 @@
                 <a href="{{ path('event_list') }}">Nos événements</a>
             </li>
             <li>
-                <a href="{{ path('main_about') }}">A propos</a>
+                <a href="{{ path('event_new') }}">Créer un événement</a>
             </li>
             <li>
                 <a href="{{ path('main_contact') }}">Contact</a>
@@ -21,6 +21,9 @@
     <div class="account">
         <a href="#">
             Connexion
+        </a>
+        <a href="{{ path('user_register') }}">
+            Inscription
         </a>
     </div>
 </header>

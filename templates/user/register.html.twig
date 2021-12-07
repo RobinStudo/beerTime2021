@@ -2,6 +2,28 @@
 
 {% block title %}Inscription - {{ parent() }}{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/components/form.css') }}">
+{% endblock %}
+
 {% block body %}
+<h1>Inscription</h1>
+
+{{ form_start(form) }}
+
+<div class="form-row">
+    {{ form_row(form.username) }}
+    {{ form_row(form.email) }}
+</div>
+<div class="form-row">
+    {{ form_row(form.password) }}
+    {{ form_row(form.birthdate) }}
+</div>
+
+<div class="form-end">
+    {{ form_row(form.submit) }}
+</div>
+
+{{ form_end(form) }}
 
 {% endblock %}

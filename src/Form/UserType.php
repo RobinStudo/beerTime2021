@@ -6,16 +6,35 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('username')
-            ->add('email')
-            ->add('password')
-            ->add('birthdate')
+            ->add('username', null, [
+                'label' => 'Nom d\'utilisateur',
+            ])
+            ->add('email', EmailType::class, [
+                'label' => 'E-mail',
+            ])
+            ->add('password', PasswordType::class, [
+                'label' => 'Mot de passe',
+            ])
+            ->add('birthdate', BirthdayType::class, [
+                'label' => 'Date de naissance',
+                'widget' => 'single_text',
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Valider',
+                'attr' => [
+                    'class' => 'button',
+                ]
+            ])
         ;
     }
 
