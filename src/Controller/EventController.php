@@ -47,6 +47,7 @@ class EventController extends AbstractController
     #[Route('/new', name: 'new')]
     #[Route('/{id}/edit', name: 'edit', requirements: ['id' => '\d+'])]
     #[IsGranted('ROLE_ORGANIZER')]
+    #[IsGranted('EVENT_FORM', subject: 'event')]
     public function form(Request $request, Event $event = null): Response
     {
         if($event){
