@@ -26,6 +26,10 @@ class UserController extends AbstractController
     #[Route('/register', name: 'register')]
     public function register(Request $request): Response
     {
+        if($this->getUser()){
+            return $this->disallowAccess();
+        }
+
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         
@@ -50,10 +54,23 @@ class UserController extends AbstractController
     #[Route('/login', name: 'login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
+        if($this->getUser()){
+            return $this->disallowAccess();
+        }
+
         $error = $authenticationUtils->getLastAuthenticationError();
 
         return $this->render('user/login.html.twig', [
             'error' => $error,
         ]);
+    }
+
+    #[Route('/logout', name: 'logout')]
+    public function logout(){}
+
+    private function disallowAccess(): Response
+    {
+        $this->addFlash('info', 'Vous êtes déjà connecté, déconnectez vous pour changer de compte');
+        return $this->redirectToRoute('main_index');
     }
 }

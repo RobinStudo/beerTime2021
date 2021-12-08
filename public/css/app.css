@@ -108,6 +108,10 @@ footer a{
     background-color: #27ae60;
 }
 
+.notification.n-info{
+    background-color: #2980b9;
+}
+
 .notification.n-error{
     background-color: #c0392b;
 }

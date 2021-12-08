@@ -18,6 +18,9 @@ security:
             lazy: true
             provider: users_storage
             custom_authenticator: App\Security\AppLoginAuthenticator
+            logout:
+                path: user_logout
+                target: main_index
 
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }

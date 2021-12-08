@@ -19,11 +19,21 @@
     </nav>
 
     <div class="account">
-        <a href="{{ path('user_login') }}">
-            Connexion
-        </a>
-        <a href="{{ path('user_register') }}">
-            Inscription
-        </a>
+        {% if app.user %}
+            <a href="#">
+                <i class="fas fa-user"></i>
+                {{ app.user.username }}
+            </a>
+            <a href="{{ path('user_logout') }}">
+                Déconnexion
+            </a>
+        {% else %}
+            <a href="{{ path('user_login') }}">
+                Connexion
+            </a>
+            <a href="{{ path('user_register') }}">
+                Inscription
+            </a>
+        {% endif %}
     </div>
 </header>
