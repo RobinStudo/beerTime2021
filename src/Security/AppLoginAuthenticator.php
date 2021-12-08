@@ -12,6 +12,8 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 
 class AppLoginAuthenticator extends AbstractAuthenticator
@@ -41,11 +43,16 @@ class AppLoginAuthenticator extends AbstractAuthenticator
     public function authenticate(Request $request): Passport
     {
         $email = $request->request->get('_email');
-        $password = $request->request->get('_password');
+        $password = $request->request->get('_password'); // $_POST['_password']
+        $token = $request->request->get('_token');
 
         return new Passport(
             new UserBadge($email),
-            new PasswordCredentials($password)
+            new PasswordCredentials($password),
+            [
+                new RememberMeBadge(),
+                new CsrfTokenBadge('authenticate', $token),
+            ]
         );
     }
 

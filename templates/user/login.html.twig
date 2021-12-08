@@ -27,9 +27,15 @@
             <input type="password" name="_password" id="passwordInput">
         </div>
     </div>
+    <div class="form-row">
+        <input type="checkbox" name="_keep_login" id="keepLoginInput">
+        <label for="keepLoginInput">Rester connecté</label>
+    </div>
     <div class="form-end">
         <button class="button">Connexion</button>
     </div>
+
+    <input type="hidden" name="_token" value="{{ csrf_token('authenticate') }}">
 </form>
 
 {% endblock %}
