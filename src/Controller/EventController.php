@@ -45,10 +45,16 @@ class EventController extends AbstractController
     }
 
     #[Route('/new', name: 'new')]
+    #[Route('/{id}/edit', name: 'edit', requirements: ['id' => '\d+'])]
     #[IsGranted('ROLE_ORGANIZER')]
-    public function new(Request $request): Response
+    public function form(Request $request, Event $event = null): Response
     {
-        $event = new Event();
+        if($event){
+            $isNew = false;
+        }else{
+            $event = new Event();
+            $isNew = true;
+        }
         $form = $this->createForm(EventType::class, $event);
         
         $form->handleRequest($request);
@@ -58,7 +64,8 @@ class EventController extends AbstractController
             $this->em->persist($event);
             $this->em->flush();
 
-            $this->addFlash('notice', 'Votre événement à bien été créé');
+            $message = sprintf('Votre événement à bien été %s', $isNew ? 'créé' : 'modifié');
+            $this->addFlash('notice', $message);
             return $this->redirectToRoute('event_show', [
                 'id' => $event->getId(),
             ]);
@@ -66,6 +73,7 @@ class EventController extends AbstractController
 
         return $this->render('event/form.html.twig', [
             'form' => $form->createView(),
+            'isNew' => $isNew
         ]);
     }
 }
