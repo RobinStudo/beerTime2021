@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion - {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/components/form.css') }}">
+{% endblock %}
+
+{% block body %}
+<h1>Connexion</h1>
+
+<form method="post" class="form-box">
+    {% if error %}
+        <div class="form-error">
+            {{ error.message }}
+        </div>
+    {% endif %}
+    <div class="form-row">
+        <div>
+            <label for="emailInput">E-mail</label>
+            <input type="email" name="_email" id="emailInput">
+        </div>
+    </div>
+    <div class="form-row">
+        <div>
+            <label for="passwordInput">Mot de passe</label>
+            <input type="password" name="_password" id="passwordInput">
+        </div>
+    </div>
+    <div class="form-end">
+        <button class="button">Connexion</button>
+    </div>
+</form>
+
+{% endblock %}
