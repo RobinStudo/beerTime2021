@@ -14,9 +14,10 @@ use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
+use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 
-class AppLoginAuthenticator extends AbstractAuthenticator
+class AppLoginAuthenticator extends AbstractAuthenticator implements AuthenticationEntryPointInterface
 {
     private $requestStack;
     private $urlGenerator;
@@ -76,14 +77,13 @@ class AppLoginAuthenticator extends AbstractAuthenticator
         return null;
     }
 
-//    public function start(Request $request, AuthenticationException $authException = null): Response
-//    {
-//        /*
-//         * If you would like this class to control what happens when an anonymous user accesses a
-//         * protected page (e.g. redirect to /login), uncomment this method and make this class
-//         * implement Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface.
-//         *
-//         * For more details, see https://symfony.com/doc/current/security/experimental_authenticators.html#configuring-the-authentication-entry-point
-//         */
-//    }
+   public function start(Request $request, AuthenticationException $authException = null): Response
+   {
+        $session = $this->requestStack->getSession();
+        $flashBag = $session->getFlashBag();
+        $flashBag->add('info', 'Vous devez être connecté pour accéder à cette section');
+        
+        $url = $this->urlGenerator->generate('user_login');
+        return new RedirectResponse($url);
+   }
 }

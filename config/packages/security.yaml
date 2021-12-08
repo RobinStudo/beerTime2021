@@ -4,6 +4,11 @@ security:
     password_hashers:
         App\Entity\User: 'auto'
     
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_MODERATOR, ROLE_ORGANIZER]
+        ROLE_MODERATOR: ROLE_USER
+        ROLE_ORGANIZER: ROLE_USER
+
     providers:
         users_storage:
             entity:

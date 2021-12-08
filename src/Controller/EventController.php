@@ -1,15 +1,16 @@
 <?php
 namespace App\Controller;
 
-use App\Entity\Event;
 use App\Entity\User;
+use App\Entity\Event;
 use App\Form\EventType;
 use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/event', name: 'event_')]
 class EventController extends AbstractController
@@ -44,6 +45,7 @@ class EventController extends AbstractController
     }
 
     #[Route('/new', name: 'new')]
+    #[IsGranted('ROLE_ORGANIZER')]
     public function new(Request $request): Response
     {
         $event = new Event();
@@ -51,9 +53,7 @@ class EventController extends AbstractController
         
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            // TODO - Remplacer par l'utilisateur connecté
-            $user = $this->em->getRepository(User::class)->find(1);
-            $event->setOwner($user);
+            $event->setOwner($this->getUser());
 
             $this->em->persist($event);
             $this->em->flush();
