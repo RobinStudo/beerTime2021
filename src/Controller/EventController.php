@@ -3,7 +3,10 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Event;
+use App\Entity\Booking;
 use App\Form\EventType;
+use App\Service\PaymentService;
+use Symfony\Component\Uid\Uuid;
 use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,11 +20,16 @@ class EventController extends AbstractController
 {
     private $em;
     private $eventRepository;
+    private $paymentService;
 
-    public function __construct(EntityManagerInterface $em, EventRepository $eventRepository)
-    {
+    public function __construct(
+        EntityManagerInterface $em, 
+        EventRepository $eventRepository,
+        PaymentService $paymentService
+    ){
         $this->em = $em;
         $this->eventRepository = $eventRepository;
+        $this->paymentService = $paymentService;
     }
 
     #[Route('', name: 'list')]
@@ -73,6 +81,36 @@ class EventController extends AbstractController
         return $this->render('event/form.html.twig', [
             'form' => $form->createView(),
             'isNew' => $isNew
+        ]);
+    }
+
+    #[Route('/{id}/booking', name: 'booking', requirements: ['id' => '\d+'])]
+    public function booking(Request $request, Event $event): Response
+    {
+        if($request->query->has('payment_intent')){
+            $paymentIntentId = $request->query->get('payment_intent');
+
+            if($this->paymentService->checkPaymentIntent($paymentIntentId)){
+                $booking = new Booking();
+                $booking->setEvent($event);
+                $booking->setUser($this->getUser());
+                $booking->setReference(Uuid::v4());
+
+                $this->em->persist($booking);
+                $this->em->flush();
+
+                return $this->render('event/booking-confirmation.html.twig', [
+                    'booking' => $booking,
+                ]);
+            }
+        }
+
+        $paymentIntent = $this->paymentService->createPaymentIntent($event->getPrice());
+
+        return $this->render('event/booking.html.twig', [
+            'event' => $event,
+            'paymentPublicKey' => $this->paymentService->getPublicKey(),
+            'paymentIntentSecret' => $paymentIntent->client_secret
         ]);
     }
 }

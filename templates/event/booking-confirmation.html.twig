@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmation de réservation - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <h1>Félicitation</h1>
+    
+    <p>
+        Votre réservation pour l'événement "{{ booking.event.name }}" est confirmée sous le numéro {{ booking.reference }}.
+    </p>
+{% endblock %}

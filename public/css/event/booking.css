@@ -1,0 +1,18 @@
+.order{
+    display: flex;
+    justify-content: space-between;
+    background-color: #bdc3c7;
+    font-size: 1.4rem;
+    padding: 15px;
+    font-weight: 700;
+}
+
+#paymentForm{
+    margin: 20px 0;
+}
+
+.action{
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px 0;
+}

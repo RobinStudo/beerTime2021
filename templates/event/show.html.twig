@@ -64,7 +64,11 @@
                 <i class="fas fa-ticket-alt"></i>
                 10 places restantes
             </span>
-            <a href="#" class="button">Réserver</a>
+            <a href="{{ path('event_booking', {
+                id: event.id
+            }) }}" class="button">
+                Réserver
+            </a>
         </div>
     </article>
 {% endblock %}

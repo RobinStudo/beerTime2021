@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réservation - {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/event/booking.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://js.stripe.com/v3/" defer></script>
+    <script src="{{ asset('js/event/booking.js') }}" defer></script>
+{% endblock %}
+
+{% block body %}
+    <h1>Réserver ma place</h1>
+    
+    <div class="order">
+        <span>
+            {{ event.name }}
+        </span>
+        <span>
+            {{ event.price }}€
+        </span>
+    </div>
+
+    <form id="paymentForm" data-payment-key="{{ paymentPublicKey }}" data-intent-secret="{{ paymentIntentSecret }}">
+        <div class="paymentWidgets"></div>
+
+        <div class="action">
+            <button class="button">Payer</button>
+        </div>
+    </form>
+{% endblock %}
