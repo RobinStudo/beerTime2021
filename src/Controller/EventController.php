@@ -46,7 +46,6 @@ class EventController extends AbstractController
 
     #[Route('/new', name: 'new')]
     #[Route('/{id}/edit', name: 'edit', requirements: ['id' => '\d+'])]
-    #[IsGranted('ROLE_ORGANIZER')]
     #[IsGranted('EVENT_FORM', subject: 'event')]
     public function form(Request $request, Event $event = null): Response
     {
@@ -54,14 +53,13 @@ class EventController extends AbstractController
             $isNew = false;
         }else{
             $event = new Event();
+            $event->setOwner($this->getUser());
             $isNew = true;
         }
         $form = $this->createForm(EventType::class, $event);
         
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            $event->setOwner($this->getUser());
-
             $this->em->persist($event);
             $this->em->flush();
 

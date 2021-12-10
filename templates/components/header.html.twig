@@ -9,7 +9,7 @@
             <li>
                 <a href="{{ path('event_list') }}">Nos événements</a>
             </li>
-            {% if is_granted('ROLE_ORGANIZER') %}
+            {% if is_granted('EVENT_FORM') %}
                 <li>
                     <a href="{{ path('event_new') }}">Créer un événement</a>
                 </li>
