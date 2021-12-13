@@ -5,6 +5,7 @@ use App\Entity\User;
 use App\Entity\Event;
 use App\Entity\Booking;
 use App\Form\EventType;
+use App\Form\SearchEventType;
 use App\Service\PaymentService;
 use Symfony\Component\Uid\Uuid;
 use App\Repository\EventRepository;
@@ -33,12 +34,17 @@ class EventController extends AbstractController
     }
 
     #[Route('', name: 'list')]
-    public function list(): Response
+    public function list(Request $request): Response
     {
-        $events = $this->eventRepository->findAll();
+        $searchForm = $this->createForm(SearchEventType::class);
+        $searchForm->handleRequest($request);
+        $searchCriteria = $searchForm->getData();
+
+        $events = $this->eventRepository->search($searchCriteria);
 
         return $this->render('event/list.html.twig', [
             'events' => $events,
+            'searchForm' => $searchForm->createView(),
         ]);
     }
 

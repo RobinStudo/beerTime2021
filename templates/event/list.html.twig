@@ -3,12 +3,20 @@
 {% block title %}Liste des événements - {{ parent() }}{% endblock %}
 
 {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/components/form.css') }}">
     <link rel="stylesheet" href="{{ asset('css/event/list.css') }}">
 {% endblock %}
 
 {% block body %}
     <h1>Nos événements</h1>
     
+    {{ form_start(searchForm) }}
+    <div class="form-row">
+        {{ form_row(searchForm.query) }}
+        {{ form_row(searchForm.submit) }}
+    </div>
+    {{ form_end(searchForm) }}
+
     <div class="events">
         {% for event in events %}
 
