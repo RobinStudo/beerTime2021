@@ -85,12 +85,14 @@ class EventController extends AbstractController
     }
 
     #[Route('/{id}/booking', name: 'booking', requirements: ['id' => '\d+'])]
+    #[IsGranted('BOOK_EVENT', subject: 'event')]
     public function booking(Request $request, Event $event): Response
     {
+        // isset($_GET['payment_intent'])
         if($request->query->has('payment_intent')){
             $paymentIntentId = $request->query->get('payment_intent');
 
-            if($this->paymentService->checkPaymentIntent($paymentIntentId)){
+            if(!$event->getPrice() || $this->paymentService->checkPaymentIntent($paymentIntentId)){
                 $booking = new Booking();
                 $booking->setEvent($event);
                 $booking->setUser($this->getUser());
@@ -99,18 +101,20 @@ class EventController extends AbstractController
                 $this->em->persist($booking);
                 $this->em->flush();
 
-                return $this->render('event/booking-confirmation.html.twig', [
-                    'booking' => $booking,
+                return $this->redirectToRoute('booking_confirmation', [
+                    'reference' => $booking->getReference(),
                 ]);
             }
         }
 
-        $paymentIntent = $this->paymentService->createPaymentIntent($event->getPrice());
+        if($event->getPrice()){
+            $paymentIntent = $this->paymentService->createPaymentIntent($event->getPrice());
+        }
 
         return $this->render('event/booking.html.twig', [
             'event' => $event,
             'paymentPublicKey' => $this->paymentService->getPublicKey(),
-            'paymentIntentSecret' => $paymentIntent->client_secret
+            'paymentIntentSecret' => isset($paymentIntent) ? $paymentIntent->client_secret : '',
         ]);
     }
 }

@@ -19,15 +19,25 @@
             {{ event.name }}
         </span>
         <span>
-            {{ event.price }}€
+            {% if event.price %}
+                {{ event.price }}€
+            {% else %}
+                Gratuit
+            {% endif %}
         </span>
     </div>
 
-    <form id="paymentForm" data-payment-key="{{ paymentPublicKey }}" data-intent-secret="{{ paymentIntentSecret }}">
+    <form id="paymentForm" method="get" data-payment-key="{{ paymentPublicKey }}" data-intent-secret="{{ paymentIntentSecret }}">
+        <p class="notification n-error hide" id="paymentError"></p>
+        
         <div class="paymentWidgets"></div>
 
+        <input type="hidden" name="payment_intent" value="true">
+
         <div class="action">
-            <button class="button">Payer</button>
+            <button class="button" id="paymentButton">
+                {{ event.price ? 'Payer' : 'Réserver' }}
+            </button>
         </div>
     </form>
 {% endblock %}

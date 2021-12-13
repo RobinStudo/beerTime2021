@@ -64,11 +64,15 @@
                 <i class="fas fa-ticket-alt"></i>
                 10 places restantes
             </span>
-            <a href="{{ path('event_booking', {
-                id: event.id
-            }) }}" class="button">
-                Réserver
-            </a>
+            {% if is_granted('DISPLAY_BOOK_EVENT', event) %}
+                <a href="{{ path('event_booking', {
+                    id: event.id
+                }) }}" class="button">
+                    Réserver
+                </a>
+            {% else %}
+                <span>Déjà réservé</span>
+            {% endif %}
         </div>
     </article>
 {% endblock %}
