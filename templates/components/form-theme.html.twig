@@ -1,0 +1,33 @@
+{% block form_errors %}
+    {% if errors|length > 0 %}
+        <ul class="form-errors">
+            {% for error in errors %}
+                <li>{{ error.message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
+
+{% block checkbox_row %}
+    {%- set widget_attr = {} -%}
+    {%- if help is not empty -%}
+        {%- set widget_attr = {attr: {'aria-describedby': id ~"_help"}} -%}
+    {%- endif -%}
+    <div{% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
+        {{- form_errors(form) -}}
+        {{- form_widget(form, widget_attr) -}}
+        {{- form_label(form) -}}
+        {{- form_help(form) -}}
+    </div>
+{% endblock %}
+
+{% block money_widget %}
+    <div class="money-widget">
+        {%- set type = type|default('text') -%}
+        {%- if type == 'range' or type == 'color' -%}
+            {%- set required = false -%}
+        {%- endif -%}
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+        <span>€</span>
+    </div>
+{% endblock %}

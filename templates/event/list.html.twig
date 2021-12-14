@@ -16,10 +16,7 @@
         {{ form_row(searchForm.category) }}
     </div>
     <div class="form-row">
-        <div>
-            {{ form_widget(searchForm.free) }}
-            {{ form_label(searchForm.free) }}
-        </div>
+        {{ form_row(searchForm.free) }}
         {{ form_row(searchForm.submit) }}
     </div>
     {{ form_end(searchForm) }}
@@ -41,7 +38,7 @@
                     <span class="event-status {{ statusColor }}">
                         {{ statusText }}
                     </span>
-                    <img src="{{ event.picture }}" alt="{{ event.name }}">
+                    {% include "components/event-media.html.twig" %}
                 </div>
                 <div class="event-summary">
                     <h2>{{ event.name }}</h2>

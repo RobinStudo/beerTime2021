@@ -11,7 +11,7 @@
 {% block body %}
     <article class="event">
         <div class="event-view">
-            <img src="{{ event.picture }}" alt="{{ event.name }}">
+            {% include "components/event-media.html.twig" %}
             <h1>{{ event.name }}</h1>
         </div>
         <div class="event-summary">

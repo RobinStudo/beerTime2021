@@ -6,6 +6,7 @@ use App\Entity\Event;
 use App\Entity\Booking;
 use App\Form\EventType;
 use App\Form\SearchEventType;
+use App\Service\MediaService;
 use App\Service\PaymentService;
 use Symfony\Component\Uid\Uuid;
 use App\Repository\EventRepository;
@@ -21,15 +22,18 @@ class EventController extends AbstractController
 {
     private $em;
     private $eventRepository;
+    private $mediaService;
     private $paymentService;
 
     public function __construct(
         EntityManagerInterface $em, 
         EventRepository $eventRepository,
+        MediaService $mediaService,
         PaymentService $paymentService
     ){
         $this->em = $em;
         $this->eventRepository = $eventRepository;
+        $this->mediaService = $mediaService;
         $this->paymentService = $paymentService;
     }
 
@@ -74,6 +78,7 @@ class EventController extends AbstractController
         
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
+            $this->mediaService->handleEvent($event);
             $this->em->persist($event);
             $this->em->flush();
 

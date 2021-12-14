@@ -3,6 +3,8 @@ parameters:
         publicKey: '%env(resolve:STRIPE_PUBLIC_KEY)%'
         privateKey: '%env(resolve:STRIPE_PRIVATE_KEY)%'
         currency: EUR
+    media:
+        path: '%kernel.project_dir%/public/data'
 
 services:
     _defaults:

@@ -3,11 +3,12 @@ namespace App\Form;
 
 use App\Entity\Event;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class EventType extends AbstractType
 {
@@ -20,9 +21,11 @@ class EventType extends AbstractType
                     'placeholder' => 'Soirée dégustation de Kwak'
                 ]
             ])
-            ->add('picture', UrlType::class, [
-                'label' => 'Image',
-                'help' => 'URL de l\'image'
+            ->add('pictureUrl', UrlType::class, [
+                'label' => 'Url de l\'image',
+            ])
+            ->add('pictureFile', FileType::class, [
+                'label' => 'Importer une image',
             ])
             ->add('description', null, [
                 'attr' => [

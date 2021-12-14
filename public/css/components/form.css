@@ -77,3 +77,28 @@ input[type="checkbox"]:checked + label:before{
     display: flex;
     justify-content: flex-end;
 }
+
+.form-errors{
+    list-style-type: none;
+    padding: 0;
+    margin: 5px 0;
+}
+
+.form-errors li{
+    padding-left: 5px;
+    border-left: 4px solid #c0392b;
+}
+
+.money-widget{
+    display: flex;
+}
+
+.money-widget span{
+    padding: 5px 10px;
+    background-color: #34495e;
+    color:white;
+    font-size: 1.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
