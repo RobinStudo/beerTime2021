@@ -58,10 +58,13 @@ class EventType extends AbstractType
                 'choice_label' => 'name',
                 'label' => 'Catégorie',
             ])
-            ->add('place', null, [
-                'choice_label' => 'name',
+            // ->add('place', null, [
+            //     'choice_label' => 'name',
+            //     'label' => 'Lieu',
+            //     'placeholder' => 'A distance',
+            // ])
+            ->add('place', PlaceType::class, [
                 'label' => 'Lieu',
-                'placeholder' => 'A distance',
             ])
             ->add('rules', null, [
                 'label' => 'Conditions d\'accès',

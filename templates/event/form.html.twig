@@ -13,25 +13,39 @@
     <div class="form-row">
         {{ form_row(form.name) }}
     </div>
+    <h2>Média</h2>
     <div class="form-row">
         {{ form_row(form.pictureFile) }}
         {{ form_row(form.pictureUrl) }}
     </div>
+    <h2>Dates</h2>
     <div class="form-row">
         {{ form_row(form.startAt) }}
         {{ form_row(form.endAt) }}
     </div>
+    <h2>Détails</h2>
     <div class="form-row">
         {{ form_row(form.price) }}
         {{ form_row(form.capacity) }}
     </div>
     <div class="form-row">
         {{ form_row(form.category) }}
-        {{ form_row(form.place) }}
     </div>
     <div class="form-row">
         {{ form_row(form.description) }}
         {{ form_row(form.rules) }}
+    </div>
+    <h2>Lieu</h2>
+    <div class="form-row">
+        {{ form_row(form.place.name) }}
+    </div>
+    <div class="form-row">
+        {{ form_row(form.place.street) }}
+        {{ form_row(form.place.zipcode) }}
+    </div>
+    <div class="form-row">
+        {{ form_row(form.place.city) }}
+        {{ form_row(form.place.country) }}
     </div>
 
     <div class="form-end">

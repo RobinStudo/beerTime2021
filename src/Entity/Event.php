@@ -105,7 +105,8 @@ class Event
     private $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Place::class, inversedBy="events")
+     * @Assert\Valid()
+     * @ORM\ManyToOne(targetEntity=Place::class, inversedBy="events", cascade={"persist"})
      */
     private $place;
 
