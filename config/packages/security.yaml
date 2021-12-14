@@ -33,5 +33,5 @@ security:
                 remember_me_parameter: '_keep_login'
 
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+
