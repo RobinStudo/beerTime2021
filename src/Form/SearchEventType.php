@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class SearchEventType extends AbstractType
 {
@@ -25,6 +26,9 @@ class SearchEventType extends AbstractType
                 'class' => Category::class,
                 'choice_label' => 'name',
                 'placeholder' => 'Filtrer par catégorie',
+            ])
+            ->add('free', CheckboxType::class, [
+                'label' => 'Uniquement les événements gratuits'
             ])
             ->add('submit', SubmitType::class, [
                 'label' => '<i class="fas fa-search"></i>',

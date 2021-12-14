@@ -31,6 +31,10 @@ class EventRepository extends ServiceEntityRepository
             $stmt->setParameter('category', $criteria['category']);
         }
 
+        if(isset($criteria['free']) && $criteria['free'] === true){
+            $stmt->andWhere('e.price IS NULL');
+        }
+
         return $stmt->getQuery()->getResult();
     }
 }
